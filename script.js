@@ -1,7 +1,7 @@
 let basket = [];
 let pricebasket = [];
 let amount = [];
-let food = ['Margherita', 'Funghi', 'Salami', 'Tonno', 'Sucuk', 'Döner', 'Hähnchendöner', 'Vegetarisch', 'Mafia', 'König Pizza'];
+let food = ['Pizza Margherita', 'Pizza Funghi', 'Pizza Salami', 'Pizza Tonno', 'Pizza Sucuk', 'Döner Pizza', 'Hähnchendöner Pizza', 'Pizza Vegetarisch', 'Mafia Pizza', 'König Pizza'];
 let pricelist = [9.99, 10.99, 10.99, 11.59, 10.99, 10.99, 11.59, 11.59, 12.99, 12.99];
 let description = ['mit Käse und Tomatensauce', 'mit Champignons', 'mit Salami', 'mit Thunfisch und Roten Zwiebeln', 'mit Knoblauchwurst', 'Drehspieß Kalbfleisch', 'Drehspieß Hähnchenfleisch, Champignons', 'mit Champignons, Broccoli, Paprika, Mais', 'Drehspieß Kalbfleisch, Peperoni, Frischer Knoblauch, Extrem Scharf', 'Drehspieß Kalbfleisch, Mais, Jalapenos, Soße Hollandaise'];
 
@@ -15,10 +15,10 @@ function render() {
 function navbar() {
     let contenthead = document.getElementById('navbar');
     contenthead.innerHTML = '';
-    contenthead.innerHTML = /*html*/`<header class="headline">
-    <a href="#" class="logo"><span>LIEFERFLO</span><img src="./img/logo.png" alt="" srcset=""></a>
-        <h3>Speisen</h3> 
-    <nav class="navbarHead"><a href="#"><img src="./img/menu.png" alt="" srcset=""></a></nav>
+    contenthead.innerHTML = /*html*/`<header>
+    <a href="#"><span>LIEFERFLO</span><img src="./img/logo2.png" alt="" srcset=""></a>
+        <h2>Speisen</h2> 
+    <nav class="navbar"><a href="#"><img src="./img/menu.png" alt="" srcset=""></a></nav>
     </header>
     `;
 }
@@ -27,22 +27,33 @@ function store() {
     let contenthead = document.getElementById('foodstore');
     contenthead.innerHTML = '';
     contenthead.innerHTML =/*html*/`
-    <section class="foodSection">
-        <div class="foodstoreImg"><img src="./img/pizza.jpg" alt=""></div>
-        <section class="foodstoreDescription">
-        <h1>FURKAAN Imbiss</h1>
-        <div class="evaluation">
-            <img src="./img/starFull.png">
-            <img src="./img/starFull.png">
-            <img src="./img/starFull.png">
-            <img src="./img/starFull.png">
-            <img src="./img/starEmpty.png">
-            2564 Bewertungen
+    <section class="foodstore">
+        <div>
+            <img class="mainimg" src="./img/pizza.jpg" alt="">
         </div>
-    <div class="additional"> 
-        <img src="./img/clock.png"> 40-60min • <img class="bike" src="./img/bicycle.png"> Kostenlos • <img src="./img/shoppingbag.png"> Kein Mindestbestellwert</div>
-    </section>   
- </section>
+        <section class="foodstoreDescription margin-left-16">
+            <h1>FURKAAN Imbiss</h1>
+            <div class="evaluation">
+                <img class="stars" src="./img/starFull.png">
+                <img class="stars" src="./img/starFull.png">
+                <img class="stars" src="./img/starFull.png">
+                <img class="stars" src="./img/starFull.png">
+                <img class="margin-right stars" src="./img/starEmpty.png">
+                2564 Bewertungen
+            </div>
+            <div class="additional"> 
+                <div>
+                    <img src="./img/clock.png"> 40-60min • 
+                </div>
+                <div>
+                    <img class="margin-left" src="./img/bicycle.png"> Kostenlos •
+                </div>
+                <div> 
+                    <img class="margin-left" src="./img/shoppingbag.png"> Kein Mindestbestellwert
+                </div>
+            </div>
+        </section>   
+    </section>
     `;
 }
 
@@ -56,6 +67,22 @@ function menuList() {
         let cardDescription = description[i];
         content.innerHTML += card(cardFood, cardPrice, cardDescription, i);
     }
+}
+
+function card(cardFood, cardPrice, cardDescription, i) {
+    return /*html*/`
+  <section class="mealbody">
+          <div class="mealcard" >
+              <div class="foodcard">
+                  <div id="meal${i}"><b>${cardFood}</b></div><br>
+                  <div id="text${i}">${cardDescription}</div>
+                  <div class="pricebox" id="price${i}">${cardPrice} €</div>
+              </div>
+              <div>
+              <button class="btn" onclick="addBasket(${i})">Bestellen</button>    
+              </div>
+          </div>
+  </section>`;
 }
 
 function addBasket(i) {
@@ -133,34 +160,18 @@ function payed() {
     document.getElementById('payed').innerHTML = paid;
 }
 
-function card(cardFood, cardPrice, cardDescription, i) {
-    return /*html*/`
-  <section class="mealbody">
-          <div class="mealcard" >
-              <div class="foodcard">
-                  <div id="meal${i}">${cardFood}</div> 
-                  <div id="text${i}">${cardDescription}</div>
-                  <div class="pricebox" id="price${i}">${cardPrice}€</div>
-              </div>
-              <div class="foodbtn">
-              <button onclick="addBasket(${i})">Bestellen</button>    
-              </div>
-          </div>
-  </section>`;
-}
-
 function htmlbasket(foods, prices, quantity, i) {
     return /*html*/ `
     <section class="basketCard">
-      <div class="inlinecard">
+      <div class="inlinecard margin-bottom-16">
         <span id="amount${i}" class="infont">${quantity}</span>
-        <div class="mealprice">
+        <div class="mealprice margin-left">
           <div id="mealbasket${i}">${foods}</div>
-          <div id="price${i}">${prices}</div>     
+          <div class="margin-left" id="price${i}">${prices}</div>     
         </div>
-        <div class="inlinebtn">
-          <button onclick="addBasketTwo(${i})">+</button>
-          <button onclick="deleteBasket(${i})">-</button>
+        <div class="inlinebtn margin-left">
+          <button class="amountbtn" onclick="addBasketTwo(${i})">+</button>
+          <button class="amountbtn" onclick="deleteBasket(${i})">-</button>
         </div>
       </div>
     </section>`
@@ -171,15 +182,13 @@ function basketbackground() {
     contentbasket.innerHTML =/*html*/`
     <section id="basketBackground" class="basketBackground">
         <section>
-        <img src="./img/x.png" onclick="baskethiddenRemove()">
         <h3 class="baskethead">Warenkorb</h3>
             <div id="basket"></div>
         </section>
         <div class="payment">
-            <div class=""><b>Gesamtsumme <span id="payed">0</span> €</b></div>
-            <button class="btnOrder">Bestellen</button>
+            <div class="margin-bottom-16"><b>Gesamtsumme <span id="payed">0</span> €</b></div>
+            <button class="btn">Bestellen</button>
         </div>
-    <div class="basketbtn" onclick="baskethidden()">Warenkorb</div>
     </section>
         `
 }
